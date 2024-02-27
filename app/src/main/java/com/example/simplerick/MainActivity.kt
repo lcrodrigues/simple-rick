@@ -9,15 +9,34 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.network.KtorClient
 import com.example.network.TestFile
+import com.example.network.model.Character
 import com.example.simplerick.ui.theme.SimpleRickTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
+    private val ktorClient = KtorClient()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            var character by remember {
+                mutableStateOf<Character?>(null)
+            }
+
+            LaunchedEffect(key1 = Unit, block = {
+                delay(3000)
+                character = ktorClient.getCharacter(1)
+            })
+
             SimpleRickTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -27,6 +46,8 @@ class MainActivity : ComponentActivity() {
                     Column {
                         Greeting("Android")
                         TestFile()
+                        
+                        Text(text = character?.name ?: "No character.")
                     }
                 }
             }
