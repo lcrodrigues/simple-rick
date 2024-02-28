@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.network.KtorClient
 import com.example.network.TestFile
-import com.example.network.model.Character
+import com.example.network.model.domain.Character
 import com.example.simplerick.ui.theme.SimpleRickTheme
 import kotlinx.coroutines.delay
 
